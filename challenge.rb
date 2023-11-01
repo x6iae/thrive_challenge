@@ -19,11 +19,6 @@ require 'json'
 # - create output file (use a service that validates the structure of input json)
 # - maybe add some tests?
 
-# Questions:
-# - are last names unique?
-# - are emails unique otherwise?
-# - are emails always in format of first_name.last_name
-
 processed_company_token_details = {}
 
 # todo: rescue file reading and json parsing
