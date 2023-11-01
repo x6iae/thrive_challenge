@@ -30,7 +30,9 @@ processed_company_token_details = {}
 company_file = File.read('companies.json')
 JSON.parse(company_file).each do |company_hash|
   company = Company.new(company_hash)
-  # todo: add company instance to hash_store
+
+  # TODO: next unless company is valid
+  processed_company_token_details[company.id.to_s] = { company: company, users: [] }
 end
 
 # todo: rescue file reading and json parsing
