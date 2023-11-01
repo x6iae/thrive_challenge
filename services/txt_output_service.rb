@@ -4,6 +4,9 @@ module TxtOutputService
   OUTPUT_FILE_NAME = 'output.txt'
 
   def perform(processed_company_token_details)
+    # TODO: first clear out the output file for a new write
+    File.open(OUTPUT_FILE_NAME, 'w') {}
+
     # Companies should be ordered by company id.
     company_keys_sorted = processed_company_token_details.keys.sort
 
@@ -33,7 +36,6 @@ module TxtOutputService
       end
     end
 
-    # TODO: first clear out the output file for a new write
     append_company_data_to_output_file(company)
     append_users_emailed_data_to_output_file(users_emailed)
     append_users_not_emailed_data_to_output_file(users_not_emailed)
@@ -80,6 +82,6 @@ module TxtOutputService
   end
 
   def write_new_line_to_output_file(data)
-    puts data
+    File.write(OUTPUT_FILE_NAME, data, mode: 'a')
   end
 end
