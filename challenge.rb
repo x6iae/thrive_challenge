@@ -38,8 +38,13 @@ end
 # todo: rescue file reading and json parsing
 user_file = File.read('users.json')
 JSON.parse(user_file).each do |user_hash|
+  # todo: can I make things all accessible by symbols?
+  company_id = user_hash['company_id']&.to_s
+  company_info = processed_company_token_details[company_id]
   user = User.new(user_hash)
-  # todo: add user instance to hash_store
+
+  # TODO: next unless user is valid
+  company_info[:users] << user
 end
 
 TxtOutputService.perform(processed_company_token_details)
