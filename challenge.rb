@@ -41,7 +41,7 @@ JSON.parse(user_file).each do |user_hash|
   # todo: can I make things all accessible by symbols?
   company_id = user_hash['company_id']&.to_s
   company_info = processed_company_token_details[company_id]
-  user = User.new(user_hash)
+  user = User.new(raw_hash: user_hash, company: company_info[:company])
 
   # TODO: next unless user is valid
   company_info[:users] << user
