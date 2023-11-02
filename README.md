@@ -20,5 +20,5 @@ Finished in 0.0051 seconds (files took 0.10142 seconds to load)
 14 examples, 0 failures
 ```
 
-Data Validation
+### Data Validation
 Input files are validated against the expected Json schemas usng the [json-schema gem](https://github.com/voxpupuli/json-schema)
