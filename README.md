@@ -22,3 +22,9 @@ Finished in 0.0051 seconds (files took 0.10142 seconds to load)
 
 ### Data Validation
 Input files are validated against the expected Json schemas usng the [json-schema gem](https://github.com/voxpupuli/json-schema)
+
+### Outstanding Questions
+A couple outstanding questions to be answered are as follow: (Note: these are also left as comments in the application code)
+
+1. Do we want to include users with no top up in output?
+2. Should there be a comma after previous token balance in the output.txt file?
