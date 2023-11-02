@@ -22,13 +22,13 @@ class User
     can_get_token_top_up? ? self.tokens.to_i + company.top_up.to_i : self.tokens.to_i
   end
 
+  def can_get_token_top_up?
+    !company.nil? && active_status
+  end
+
   private
   def set_company_association(company)
     # TODO add errors if company is not a Company or company id doesn't match
     @company = company
-  end
-
-  def can_get_token_top_up?
-    !company.nil? && active_status
   end
 end

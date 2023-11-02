@@ -7,7 +7,7 @@ RSpec.describe TxtOutputService do
     let(:company) { double(id: 7, name: 'Test Company Inc.') }
     let(:expected_data) do
       <<~EXPECTED
-        Company Id: 7
+        \nCompany Id: 7
         Company Name: Test Company Inc.
       EXPECTED
     end
