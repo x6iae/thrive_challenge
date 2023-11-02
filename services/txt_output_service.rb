@@ -90,7 +90,6 @@ module TxtOutputService
     File.write(OUTPUT_FILE_NAME, data, mode: 'a')
   end
 
-  # todo: parse to int for calculations
   def calculate_total_top_up(users)
     total_initial_tokens = users.sum(&:tokens)
     total_new_token_balance = users.sum(&:new_token_balance)

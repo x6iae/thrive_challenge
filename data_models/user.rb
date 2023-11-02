@@ -28,7 +28,7 @@ class User
 
   private
   def set_company_association(company)
-    # TODO add errors if company is not a Company or company id doesn't match
+    return unless company && company.id == @company_id
     @company = company
   end
 end

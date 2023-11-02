@@ -29,7 +29,6 @@ def open_and_read_file(file_path)
     file = File.read(file_path)
     JSON.parse(file)
   rescue => e
-    # todo: question: what's preferred way of raising error
     error_msg = "File at #{file_path} can not be found or unable to open"
     log_error_and_exit(error_msg)
   end
@@ -46,8 +45,6 @@ log_error_and_exit(companies_validation_result, metadata: ['companies.json']) un
 
 companies_data.each do |company_hash|
   company = Company.new(company_hash)
-
-  # TODO: next unless company is valid
   processed_company_token_details[company.id.to_s] = { company: company, users: [] }
 end
 
@@ -56,12 +53,13 @@ users_validation_result = JSON::Validator.fully_validate(UserSchema::SCHEMA, use
 log_error_and_exit(users_validation_result, metadata: ['users.json']) unless users_validation_result.empty?
 
 users_data.each do |user_hash|
-  # todo: can I make things all accessible by symbols?
   company_id = user_hash['company_id']&.to_s
   company_info = processed_company_token_details[company_id]
-  user = User.new(raw_hash: user_hash, company: company_info[:company])
 
-  # TODO: next unless user is valid
+  # if there is no associated company for this user, skip them.
+  next unless company_info
+
+  user = User.new(raw_hash: user_hash, company: company_info[:company])
   company_info[:users] << user
 end
 
