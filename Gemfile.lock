@@ -3,14 +3,9 @@ GEM
   specs:
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
-    coderay (1.1.3)
     diff-lcs (1.5.0)
     json-schema (4.1.1)
       addressable (>= 2.8)
-    method_source (1.0.0)
-    pry (0.14.1)
-      coderay (~> 1.1)
-      method_source (~> 1.0)
     public_suffix (5.0.3)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
@@ -31,11 +26,7 @@ PLATFORMS
 
 DEPENDENCIES
   json-schema
-  pry
   rspec
-
-RUBY VERSION
-   ruby 2.7.3p183
 
 BUNDLED WITH
    2.1.4

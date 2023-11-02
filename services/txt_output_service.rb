@@ -3,8 +3,6 @@ module TxtOutputService
 
   OUTPUT_FILE_NAME = 'output.txt'
 
-  require 'pry'
-
   def perform(processed_company_token_details)
     # first clear out the output file for a new write
     File.open(OUTPUT_FILE_NAME, 'w') {}
