@@ -2,6 +2,8 @@
 # this file serves as an entrypoint into the system
 require_relative 'data_models/user'
 require_relative 'data_models/company'
+require_relative 'data_models/schemas/company_schema'
+require_relative 'data_models/schemas/user_schema'
 require_relative 'services/txt_output_service'
 require 'json'
 
@@ -19,20 +21,41 @@ require 'json'
 # - create output file (use a service that validates the structure of input json)
 # - maybe add some tests?
 
-processed_company_token_details = {}
+require "json-schema"
 
-# todo: rescue file reading and json parsing
-company_file = File.read('companies.json')
-JSON.parse(company_file).each do |company_hash|
+processed_company_token_details = {}
+def open_and_read_file(file_path)
+  begin
+    file = File.read(file_path)
+    JSON.parse(file)
+  rescue => e
+    # todo: question: what's preferred way of raising error
+    error_msg = "File at #{file_path} can not be found or unable to open"
+    log_error_and_exit(error_msg)
+  end
+end
+
+def log_error_and_exit(error_msg, metadata: [])
+  puts "#{metadata.join(', ')} - #{error_msg}"
+  exit
+end
+
+companies_data = open_and_read_file('companies.json')
+companies_validation_result = JSON::Validator.fully_validate(CompanySchema::SCHEMA, companies_data, list: true)
+log_error_and_exit(companies_validation_result, metadata: ['companies.json']) unless companies_validation_result.empty?
+
+companies_data.each do |company_hash|
   company = Company.new(company_hash)
 
   # TODO: next unless company is valid
   processed_company_token_details[company.id.to_s] = { company: company, users: [] }
 end
 
-# todo: rescue file reading and json parsing
-user_file = File.read('users.json')
-JSON.parse(user_file).each do |user_hash|
+users_data = open_and_read_file('users.json')
+users_validation_result = JSON::Validator.fully_validate(UserSchema::SCHEMA, users_data, list: true)
+log_error_and_exit(users_validation_result, metadata: ['users.json']) unless users_validation_result.empty?
+
+users_data.each do |user_hash|
   # todo: can I make things all accessible by symbols?
   company_id = user_hash['company_id']&.to_s
   company_info = processed_company_token_details[company_id]
